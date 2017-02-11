@@ -1,4 +1,4 @@
-# CodeDay Companion
+# CodeDay Companion &mdash; A Progressive Web App&trade;
 
 CodeDay Companion is a web app that will assist you during the event, giving you useful information such as the event schedule, staff contact info, and your ticket.
 
