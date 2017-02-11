@@ -145,6 +145,9 @@ body{
   outline: none;
   font-size: 1.3em;
   border-bottom: 1px solid gray;
+  z-index: 99;
+  position: relative;
+  background: #EEE;
 }
 
 .button{
@@ -156,6 +159,7 @@ body{
   padding: 10px;
   text-align: center;
   cursor: pointer;
+  z-index: 98;
 }
 
 .grid--length-1 .button{

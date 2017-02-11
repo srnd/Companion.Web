@@ -6,39 +6,43 @@ var firstOpen = true
 companionApp.config(function($routeProvider, $locationProvider){
   $routeProvider
     .when('/', {
-      templateUrl: "views/welcome.html",
+      templateUrl: "/views/welcome.html",
       controller: "mainController"
     })
     .when('/login', {
-      templateUrl: "views/login.html",
+      templateUrl: "/views/login.html",
       controller: "loginController"
     })
+    .when('/login/:id', {
+      templateUrl: "/views/deeplink_login.html",
+      controller: "loginDeeplinkController"
+    })
     .when('/event', {
-      templateUrl: "views/event.html",
+      templateUrl: "/views/event.html",
       controller: "eventController"
     })
     .when('/ticket', {
-      templateUrl: "views/ticket.html",
+      templateUrl: "/views/ticket.html",
       controller: "ticketController"
     })
     .when('/slack', {
-      templateUrl: "views/slack.html",
+      templateUrl: "/views/slack.html",
       controller: "slackController"
     })
     .when('/help', {
-      templateUrl: "views/help.html",
+      templateUrl: "/views/help.html",
       controller: "helpController"
     })
     .when('/schedule', {
-      templateUrl: "views/schedule.html",
+      templateUrl: "/views/schedule.html",
       controller: "scheduleController"
     })
     .when('/info', {
-      templateUrl: "views/info.html",
+      templateUrl: "/views/info.html",
       controller: "infoController"
     })
     .when('/reset', {
-      templateUrl: "views/welcome.html",
+      templateUrl: "/views/welcome.html",
       controller: "resetController"
     })
     .otherwise({
@@ -110,6 +114,38 @@ companionApp.controller('loginController', function($scope, $http, $location){
   }
 });
 
+companionApp.controller('loginDeeplinkController', function($scope, $routeParams, $http){
+  $scope.registrationFound = false;
+
+  $http({
+    method: "GET",
+    url: "/api/login?id=" + encodeURIComponent($routeParams.id)
+  }).then(function(response){
+    if(response.data.ok){
+      $scope.verify = true;
+      $scope.registration = response.data.registration;
+
+      $http({
+        method: "GET",
+        url: "/api/staff?event=" + encodeURIComponent($scope.registration.event.id)
+      }).then(function(response){
+        cache = {
+          loggedIn: true,
+          registration: $scope.registration,
+          eventStaff: response.data.staff
+        };
+
+        localStorage.codedayCompanion = JSON.stringify(cache);
+
+        $scope.registrationFound = true;
+      });
+    }else{
+      alert(response.data.message);
+    }
+    // $scope.$apply()
+  });
+});
+
 companionApp.controller('eventController', function($scope, $location){
   if(cache.loggedIn){
     $scope.loggedIn = true;
@@ -132,10 +168,10 @@ companionApp.controller('helpController', function($scope){
   }else{
     $location.path("/");
   }
-})
+});
 
 companionApp.controller('scheduleController', function($scope){
-  $scope.eventSchedule = cache.registration.event.schedule
+  $scope.eventSchedule = cache.registration.event.schedule;
   // $scope.days = [ ]
   // for(var dayName in cache.registration.event.schedule){
   //   $scope.days.push({
@@ -143,11 +179,11 @@ companionApp.controller('scheduleController', function($scope){
   //     schedule: cache.registration.event.schedule[dayName]
   //   })
   // }
-})
+});
 
 companionApp.controller('infoController', function($scope){
-  
-})
+
+});
 
 companionApp.controller('slackController', function($scope){
   // nope
