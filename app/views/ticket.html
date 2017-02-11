@@ -1,11 +1,12 @@
 <a class="back" href="/event">&#x25c0; Back to event</a>
-
 <div class="header">{{ registration.first_name }}'s Ticket</div>
 
 <div class="profile-picture" style="background-image: url({{ registration.profile_image }})"></div>
 <div class="ticket-name">{{ registration.name }}</div>
 <div class="event-name">{{ registration.event.name }}</div>
 <div class="ticket-type">{{ registration.type }}</div>
+
+<a class="apple-wallet" href="https://codeday.vip/{{ registration.id }}/ticket/passbook"></a>
 
 <div class="ticket-barcode" style="background-image: url(https://chart.googleapis.com/chart?cht=qr&amp;chs=300x300&amp;chl={{ registration.id }})"></div>
 <div class="barcode-text">{{ registration.id }}</div>

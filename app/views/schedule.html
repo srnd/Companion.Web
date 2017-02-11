@@ -1,0 +1,10 @@
+<a class="back" href="/event">&#x25c0; Back to event</a>
+<div class="header">Schedule</div>
+
+<div ng-repeat="(day, schedule) in eventSchedule">
+  <div class="subheader">{{ day }}</div>
+
+  <div class="schedule-event type--{{ event.type }}" ng-repeat="event in schedule">
+    <strong>{{ event.hour }}:</strong> {{ event.title }}
+  </div>
+</div>

@@ -37,22 +37,24 @@
     to { transform: translateX(0); }
 }
 
-.ng-enter{
+.ng-enter:not(.noanimate){
   position: fixed;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
   animation: slideInRight 0.5s;
+  -webkit-animation: slideInRight 0.5s;
 }
 
-.ng-leave{
+.ng-leave:not(.noanimate){
   position: fixed;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
   animation: slideOutLeft 0.5s;
+  -webkit-animation: slideOutLeft 0.5s;
 }
 
 body{
@@ -81,6 +83,12 @@ body{
   margin-bottom: 20px;
 }
 
+.subheader{
+  font-family: "Lato", "Roboto", sans-serif, "Roboto", sans-serif;
+  font-size: 2em;
+  padding: 10px;
+}
+
 .header.green{
   background: #A0D388;
 }
@@ -94,8 +102,13 @@ body{
 .text{
   margin-bottom: 20px;
   padding: 10px;
+  padding-top: 0px;
   font-size: 1.1em;
   color: rgba(0, 0, 0, 0.8);
+}
+
+.muted{
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .codeday-logo{
@@ -235,4 +248,31 @@ body{
   text-decoration: none;
   font-weight: bold;
   font-family: "Lato", "Roboto", sans-serif;
+}
+
+.apple-wallet{
+  display: block;
+  width: 129px;
+  height: 40px;
+  margin: 0 auto;
+  margin-top: 10px;
+  background-image: url(/img/wallet.png);
+}
+
+.schedule-event{
+  margin: 10px;
+  padding: 8px;
+  border-left: 4px solid transparent;
+}
+
+.schedule-event.type--event{
+  border-left-color: #cb7972;
+  background-color: #edd2cf;
+  color: #8a3a33;
+}
+
+.schedule-event.type--workshop{
+  border-left-color: #466D98;
+  background-color: #d7e1ed;
+  color: #1e2e41;
 }

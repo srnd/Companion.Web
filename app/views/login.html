@@ -12,8 +12,8 @@
 
   <div class="grid--length-1 bottom-align">
     <a ng-click="findAttendee()" ng-enabled="!working" class="button color-primary-1">
-      <span ng-if="working">Finding your registration...</span>
-      <span ng-if="!working">Next: Verify Registration</span>
+      <span ng-if="working" class="noanimate">Finding your registration...</span>
+      <span ng-if="!working" class="noanimate">Next: Verify Registration</span>
     </a>
   </div>
 </div>
@@ -26,8 +26,12 @@
   <div class="event-name">{{ registration.event.name }}</div>
   <div class="ticket-type">{{ registration.type }}</div>
 
-  <div class="grid--length-1 bottom-align">
-    <a ng-click="saveRegistration()" class="button color-primary-1">
+  <div class="grid--length-2 bottom-align">
+    <a ng-click="verify = false" class="button color-primary-1">
+      Wait, go back!
+    </a>
+
+    <a ng-click="saveRegistration()" class="button color-primary-2">
       Yep, that's me!
     </a>
   </div>

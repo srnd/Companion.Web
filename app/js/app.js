@@ -24,6 +24,14 @@ companionApp.config(function($routeProvider, $locationProvider){
       templateUrl: "views/slack.html",
       controller: "slackController"
     })
+    .when('/help', {
+      templateUrl: "views/help.html",
+      controller: "helpController"
+    })
+    .when('/schedule', {
+      templateUrl: "views/schedule.html",
+      controller: "scheduleController"
+    })
     .otherwise({
       redirectTo: '/'
     });
@@ -45,20 +53,30 @@ companionApp.controller('loginController', function($scope, $http, $location){
       url: "/api/login?email=" + encodeURIComponent($scope.email)
     }).then(function(response){
       $scope.working = false;
-      $scope.verify = true;
-      $scope.registration = response.data.registration;
+      if(response.data.ok){
+        $scope.verify = true;
+        $scope.registration = response.data.registration;
+      }else{
+        alert(response.data.message)
+      }
       // $scope.$apply()
     });
   }
 
   $scope.saveRegistration = function(){
-    cache = {
-      loggedIn: true,
-      registration: $scope.registration
-    };
+    $http({
+      method: "GET",
+      url: "/api/staff?event=" + encodeURIComponent($scope.registration.event.id)
+    }).then(function(response){
+      cache = {
+        loggedIn: true,
+        registration: $scope.registration,
+        eventStaff: response.data.staff
+      };
 
-    localStorage.codedayCompanion = JSON.stringify(cache);
-    $location.path("/event");
+      localStorage.codedayCompanion = JSON.stringify(cache);
+      $location.path("/event");
+    });
   }
 });
 
@@ -77,6 +95,25 @@ companionApp.controller('ticketController', function($scope){
     $location.path("/");
   }
 });
+
+companionApp.controller('helpController', function($scope){
+  if(cache.loggedIn){
+    $scope.staff = cache.eventStaff;
+  }else{
+    $location.path("/");
+  }
+})
+
+companionApp.controller('scheduleController', function($scope){
+  $scope.eventSchedule = cache.registration.event.schedule
+  // $scope.days = [ ]
+  // for(var dayName in cache.registration.event.schedule){
+  //   $scope.days.push({
+  //     day: dayName,
+  //     schedule: cache.registration.event.schedule[dayName]
+  //   })
+  // }
+})
 
 companionApp.controller('slackController', function($scope){
   // nope

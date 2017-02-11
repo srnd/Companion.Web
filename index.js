@@ -35,9 +35,27 @@ app.get('/api/login', (req, res) => {
     }else{
       res.send({
         ok: false,
-        message: "No registration found for email"
+        message: "We couldn't find a registration for that email :("
       })
     }
+  })
+})
+
+app.get('/api/staff', (req, res) => {
+  clear.getEventById(req.query.event, (event) => {
+    res.send({
+      ok: true,
+      staff: {
+        manager: {
+          email: event.manager.email,
+          first_name: event.manager.first_name
+        },
+        evangelist: {
+          phone: event.evangelist.phone,
+          first_name: event.evangelist.first_name
+        }
+      }
+    })
   })
 })
 
