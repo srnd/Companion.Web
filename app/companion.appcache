@@ -1,0 +1,26 @@
+CACHE MANIFEST
+
+# meme
+
+/
+index.html
+css/styles.css
+css/animate.css
+css/fonts.css
+js/app.js
+
+views/event.html
+views/login.html
+views/slack.html
+views/ticket.html
+views/welcome.html
+
+img/logo.png
+
+js/angular.min.js
+js/angular-route.js
+js/angular-animate.js
+
+# https://fonts.googleapis.com/icon?family=Material+Icons|Roboto|Lato:700
+
+https://srnd.org/assets/img/press/assets/brand/codeday_logo.png

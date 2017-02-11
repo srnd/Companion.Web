@@ -1,0 +1,34 @@
+<div ng-show="!verify">
+  <div class="header">Find Registration</div>
+
+  <div class="text">
+    Hey there! For us to know who you are, we need you to enter your email in the box below,
+    then press next. Note that this should be the email you registered for CodeDay with.
+  </div>
+
+  <div class="grid--length-1">
+    <input type="text" ng-enabled="!working" placeholder="your email" ng-model="email" id="email" value="me@tjhorner.com">
+  </div>
+
+  <div class="grid--length-1 bottom-align">
+    <a ng-click="findAttendee()" ng-enabled="!working" class="button color-primary-1">
+      <span ng-if="working">Finding your registration...</span>
+      <span ng-if="!working">Next: Verify Registration</span>
+    </a>
+  </div>
+</div>
+
+<div ng-show="verify">
+  <div class="header">Is this you?</div>
+
+  <div class="profile-picture" style="background-image: url({{ registration.profile_image }})"></div>
+  <div class="ticket-name">{{ registration.name }}</div>
+  <div class="event-name">{{ registration.event.name }}</div>
+  <div class="ticket-type">{{ registration.type }}</div>
+
+  <div class="grid--length-1 bottom-align">
+    <a ng-click="saveRegistration()" class="button color-primary-1">
+      Yep, that's me!
+    </a>
+  </div>
+</div>

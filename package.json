@@ -1,0 +1,19 @@
+{
+  "name": "codeday-companion",
+  "version": "1.0.0",
+  "description": "CodeDay Companion app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "codeday",
+    "studentrnd"
+  ],
+  "author": "TJ Horner <tjhorner@srnd.org>",
+  "license": "ISC",
+  "dependencies": {
+    "codeday-clear": "^1.1.4",
+    "express": "^4.14.1"
+  }
+}

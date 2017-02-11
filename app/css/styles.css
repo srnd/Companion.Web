@@ -1,0 +1,238 @@
+*, * *{
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Avenir Next';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/fonts/AvenirNextLTPro-Bold.otf) format('otf');
+}
+
+@keyframes slideOutLeft {
+    to { transform: translateX(-100%); }
+}
+
+@-webkit-keyframes slideOutLeft {
+    to { transform: translateX(-100%); }
+}
+
+@-moz-keyframes slideOutLeft {
+    to { transform: translateX(-100%); }
+}
+
+@keyframes slideInRight {
+    from { transform:translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+@-webkit-keyframes slideInRight {
+    from { transform:translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+@-moz-keyframes slideInRight {
+    from { transform:translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+.ng-enter{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  animation: slideInRight 0.5s;
+}
+
+.ng-leave{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  animation: slideOutLeft 0.5s;
+}
+
+body{
+  margin: 0;
+  background: #EEE;
+  width: 100%;
+  height: 100%;
+}
+
+#main{
+  width: 100%;
+  height: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  font-family: Roboto, sans-serif;
+  position: relative;
+}
+
+.header{
+  font-family: "Lato", "Roboto", sans-serif, "Roboto", sans-serif;
+  padding: 50px 20px;
+  color: white; 
+  background: rgb(205, 122, 114);
+  font-size: 2.2em;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.header.green{
+  background: #A0D388;
+}
+
+.header.medium-size{
+  font-size: 1.5em;
+  padding: 30px 20px;
+  margin-bottom: 0;
+}
+
+.text{
+  margin-bottom: 20px;
+  padding: 10px;
+  font-size: 1.1em;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.codeday-logo{
+  margin-top: 50px;
+  margin-bottom: 50px;
+  height: 100px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 90%;
+  margin: 56px auto;
+  background-image: url(/img/logo.png);
+}
+
+.codeday-logo.home{
+  margin-top: 200px;
+  margin-bottom: 100px;
+}
+
+.grid--length-1{
+  width: 100%;
+}
+
+.grid--length-2{
+  width: 100%;
+}
+
+.grid--length-1 input{
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 10px;
+  text-align: center;
+  outline: none;
+  font-size: 1.3em;
+  border-bottom: 1px solid gray;
+}
+
+.button{
+  display: inline-block;
+  color: white;
+  font-size: 1.3em;
+  text-decoration: none;
+  float: left;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.grid--length-1 .button{
+  width: 100%;
+}
+
+.grid--length-2 .button{
+  width: 50%;
+}
+
+.color-primary-1{
+  background: rgb(170, 99, 93);
+}
+
+.color-primary-2{
+  background: rgb(205, 122, 114);
+}
+
+.color-primary-3{
+  background: rgb(222, 134, 126);
+}
+
+.color-primary-4{
+  background: rgb(243, 150, 141);
+}
+
+.color-primary-5{
+  background: rgb(235, 106, 95);
+}
+
+.button.big{
+  font-family: "Lato", "Roboto", sans-serif;
+  text-align: left;
+  font-size: 1.7em;
+  padding: 18px;
+  padding-top: 57px;
+  font-weight: bold;
+}
+
+.button.sorta-big{
+  font-family: "Lato", "Roboto", sans-serif;
+  text-align: left;
+  font-size: 1.7em;
+  padding: 18px;
+  font-weight: bold;
+}
+
+.bottom-align{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+.profile-picture, .ticket-barcode{
+  width: 150px;
+  height: 150px;
+  background-size: 150px 150px;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+
+.ticket-barcode{
+  margin-top: 25px;
+}
+
+.ticket-name{
+  text-align: center;
+  margin-top: 10px;
+  font-size: 1.4em;
+}
+
+.event-name, .barcode-text{
+  text-align: center;
+  margin-top: 5px;
+  font-size: 1.2em;
+}
+
+.ticket-type{
+  text-align: center;
+  margin-top: 5px;
+  font-size: 1.2em;
+  text-transform: capitalize;
+}
+
+.back{
+  color: white;
+  position: absolute;
+  top: 10px;
+  left: 18px;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: "Lato", "Roboto", sans-serif;
+}

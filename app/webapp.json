@@ -1,0 +1,17 @@
+{
+  "name": "CodeDay Companion",
+  "description": "CodeDay on the go",
+  "short_name": "CodeDay",
+  "display": "standalone",
+  "theme_color": "#F3968D",
+  "start_url": "/",
+  "scope": "/",
+  "background_color": "#fff",
+  "icons": [
+    {
+      "src": "/img/appicon.png",
+      "type": "image/png",
+      "sizes": "670x670"
+    }
+  ]
+}
