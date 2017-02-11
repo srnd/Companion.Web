@@ -1,6 +1,7 @@
 var companionApp = angular.module('companionApp', ['ngRoute', 'ngAnimate']);
 
 var cache = (localStorage.codedayCompanion ? JSON.parse(localStorage.codedayCompanion) : { });
+var firstOpen = true
 
 companionApp.config(function($routeProvider, $locationProvider){
   $routeProvider
@@ -32,11 +33,25 @@ companionApp.config(function($routeProvider, $locationProvider){
       templateUrl: "views/schedule.html",
       controller: "scheduleController"
     })
+    .when('/info', {
+      templateUrl: "views/info.html",
+      controller: "infoController"
+    })
+    .when('/reset', {
+      templateUrl: "views/welcome.html",
+      controller: "resetController"
+    })
     .otherwise({
       redirectTo: '/'
     });
   
   $locationProvider.html5Mode(true);
+});
+
+companionApp.controller('resetController', function($scope, $location){
+  cache = { }
+  localStorage.codedayCompanion = ""
+  $location.path("/")
 });
 
 companionApp.controller('mainController', function($scope, $location){
@@ -75,12 +90,27 @@ companionApp.controller('loginController', function($scope, $http, $location){
       };
 
       localStorage.codedayCompanion = JSON.stringify(cache);
+
       $location.path("/event");
+      // $scope.requestingNotifications = true
+    
+      // Notification.requestPermission().then(function(result) {
+      //   cache = {
+      //     loggedIn: true,
+      //     registration: $scope.registration,
+      //     eventStaff: response.data.staff,
+      //     notifications: result
+      //   };
+
+      //   localStorage.codedayCompanion = JSON.stringify(cache);
+
+      //   $location.path("/event");
+      // });
     });
   }
 });
 
-companionApp.controller('eventController', function($scope){
+companionApp.controller('eventController', function($scope, $location){
   if(cache.loggedIn){
     $scope.loggedIn = true;
     $scope.registration = cache.registration;
@@ -115,6 +145,20 @@ companionApp.controller('scheduleController', function($scope){
   // }
 })
 
+companionApp.controller('infoController', function($scope){
+  
+})
+
 companionApp.controller('slackController', function($scope){
   // nope
 });
+
+// if('serviceWorker' in navigator){
+//   window.addEventListener('load', function() {
+//     navigator.serviceWorker.register('/sw.js').then(function(registration) {
+//       console.log('SW registered', registration.scope);
+//     }).catch(function(err) {
+//       console.log('Couldn\'t register SW', err);
+//     });
+//   });
+// }

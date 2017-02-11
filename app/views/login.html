@@ -1,4 +1,4 @@
-<div ng-show="!verify">
+<div ng-show="!verify && !requestingNotifications">
   <div class="header">Find Registration</div>
 
   <div class="text">
@@ -18,7 +18,7 @@
   </div>
 </div>
 
-<div ng-show="verify">
+<div ng-show="verify && !requestingNotifications">
   <div class="header">Is this you?</div>
 
   <div class="profile-picture" style="background-image: url({{ registration.profile_image }})"></div>
@@ -35,4 +35,10 @@
       Yep, that's me!
     </a>
   </div>
+</div>
+
+<div ng-show="requestingNotifications">
+  <div class="header">Allow notifications</div>
+
+  <div class="text">If you allow notifications, event staff will be able to communicate with you during the event.</div>
 </div>
