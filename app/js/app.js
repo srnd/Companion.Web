@@ -52,8 +52,8 @@ companionApp.config(function($routeProvider, $locationProvider){
       controller: "resetController"
     })
     .when('/admin', {
-      templateUrl: "/views/admin.html",
-      controller: "adminController"
+      templateUrl: "/views/template.html",
+      controller: "templateController"
     })
     .otherwise({
       redirectTo: '/'
@@ -182,7 +182,7 @@ companionApp.controller('slackController', function($scope){
   // nope
 });
 
-companionApp.controller('adminController', function($scope, $location){
+companionApp.controller('templateController', function($scope, $location){
   // You can redirect to a different path with $location.path("/path")
   // For example: `$location.path("/event")` would redirect to the event page
   if(cache.loggedIn){
