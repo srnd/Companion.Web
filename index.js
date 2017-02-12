@@ -95,7 +95,7 @@ app.get('/api/staff', (req, res) => {
   })
 })
 
-// let angular handle all the other views
+// let angular handle all the other routes
 app.get('*', (req, res) => {
   res.sendFile(__dirname + "/app/index.html")
 })
