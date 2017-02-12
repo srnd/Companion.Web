@@ -184,7 +184,7 @@ companionApp.controller('slackController', function($scope){
 
 companionApp.controller('templateController', function($scope, $location){
   // You can redirect to a different path with $location.path("/path")
-  // For example: `$location.path("/event")` would redirect to the event page.
+  // For example: `$location.path("/event")` would redirect to the event page...
   if(cache.loggedIn){
     // Check if the user is logged in with <el ng-if="loggedIn">...</el>
     $scope.loggedIn = true;
