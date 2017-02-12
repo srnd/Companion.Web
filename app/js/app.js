@@ -59,6 +59,10 @@ companionApp.config(function($routeProvider, $locationProvider){
       templateUrl: "/views/settings.html",
       controller: "settingsController"
     })
+    .when('/stickers', {
+      templateUrl: "/views/stickers.html",
+      controller: "stickersController"
+    })
     .otherwise({
       redirectTo: '/'
     });
@@ -187,15 +191,19 @@ companionApp.controller('slackController', function($scope){
 });
 
 companionApp.controller('settingsController', function($scope, $location){
-  // You can redirect to a different path with $location.path("/path")
-  // For example: `$location.path("/event")` would redirect to the event page...
   if(cache.loggedIn){
-    // Check if the user is logged in with <el ng-if="loggedIn">...</el>
     $scope.loggedIn = true;
-    // Access the registration object in the view with {{ registration }}
     $scope.registration = cache.registration;
   }
 })
+
+companionApp.controller('stickersController', function($scope, $location){
+  if(cache.loggedIn){
+    $scope.loggedIn = true;
+    $scope.registration = cache.registration;
+  }
+})
+
 
 companionApp.controller('templateController', function($scope, $location){
   // You can redirect to a different path with $location.path("/path")
