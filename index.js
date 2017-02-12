@@ -6,6 +6,19 @@ var config = require('./config.json')
 var Clear = require('codeday-clear'),
     clear = new Clear(config.CLEAR_TOKEN, config.CLEAR_SECRET)
 
+var Bot = require('slackbots');
+
+// create a bot
+var botSettings = {
+    token: config.SLACK_SECRET,
+    name: config.SLACK_NAME
+};
+var slackBot = new Bot(botSettings);
+
+slackBot.on('start', function() {
+    slackBot.postMessageToChannel('drinks-as-a-service', 'Hi there!!');
+});
+
 // process.on('uncaughtException', () => {})
 
 app.use(express.static("app"))
