@@ -51,7 +51,7 @@ companionApp.config(function($routeProvider, $locationProvider){
       templateUrl: "/views/welcome.html",
       controller: "resetController"
     })
-    .when('/admin', {
+    .when('/template', {
       templateUrl: "/views/template.html",
       controller: "templateController"
     })
