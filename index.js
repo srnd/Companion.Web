@@ -20,7 +20,6 @@ slackBot.on('start', function() {
 });
 
 // process.on('uncaughtException', () => {})
-
 app.use(express.static("app"))
 
 var filterRegistration = reg => {
