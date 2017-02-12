@@ -3,6 +3,12 @@ var companionApp = angular.module('companionApp', ['ngRoute', 'ngAnimate']);
 var cache = (localStorage.codedayCompanion ? JSON.parse(localStorage.codedayCompanion) : { });
 var firstOpen = true
 
+companionApp.filter('mapsUrl', function($sce) {
+  return function(place){
+    return $sce.trustAsResourceUrl("https://www.google.com/maps/embed/v1/place?key=AIzaSyATJIcKruTQnapxp7lxTmnpy-yoMDJEwy0&q=" + encodeURIComponent(place));
+  };
+});
+
 companionApp.config(function($routeProvider, $locationProvider){
   $routeProvider
     .when('/', {
@@ -44,6 +50,10 @@ companionApp.config(function($routeProvider, $locationProvider){
     .when('/reset', {
       templateUrl: "/views/welcome.html",
       controller: "resetController"
+    })
+    .when('/admin', {
+      templateUrl: "/views/admin.html",
+      controller: "adminController"
     })
     .otherwise({
       redirectTo: '/'
@@ -160,12 +170,28 @@ companionApp.controller('scheduleController', function($scope){
 });
 
 companionApp.controller('infoController', function($scope){
-  // nope
+  if(cache.loggedIn){
+    $scope.loggedIn = true;
+    $scope.registration = cache.registration;
+  }else{
+    $location.path("/");
+  }
 });
 
 companionApp.controller('slackController', function($scope){
   // nope
 });
+
+companionApp.controller('adminController', function($scope, $location){
+  // You can redirect to a different path with $location.path("/path")
+  // For example: `$location.path("/event")` would redirect to the event page
+  if(cache.loggedIn){
+    // Check if the user is logged in with <el ng-if="loggedIn">...</el>
+    $scope.loggedIn = true;
+    // Access the registration object in the view with {{ registration }}
+    $scope.registration = cache.registration;
+  }
+})
 
 // if('serviceWorker' in navigator){
 //   window.addEventListener('load', function() {

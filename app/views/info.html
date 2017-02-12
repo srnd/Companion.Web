@@ -1,4 +1,15 @@
 <a class="back" href="/event">&#x25c0; Back to event</a>
 <div class="header">Event Info</div>
 
-<div class="text">we have no idea what should be here lol</div>
+<div class="subheader">{{ registration.event.name }}</div>
+
+<div class="map">
+  <iframe
+    width="100%"
+    height="300"
+    frameborder="0" style="border:0"
+    src="{{ registration.event.venue.full_address | mapsUrl }}" allowfullscreen>
+  </iframe>
+</div>
+
+<div class="text">Arrive at 11am</div>

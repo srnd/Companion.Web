@@ -6,7 +6,7 @@ var config = require('./config.json')
 var Clear = require('codeday-clear'),
     clear = new Clear(config.CLEAR_TOKEN, config.CLEAR_SECRET)
 
-process.on('uncaughtException', () => {})
+// process.on('uncaughtException', () => {})
 
 app.use(express.static("app"))
 
@@ -23,7 +23,10 @@ var filterRegistration = reg => {
       id: reg.event.id,
       region: reg.event.region_name,
       name: reg.event.name,
-      schedule: reg.event.schedule
+      schedule: reg.event.schedule,
+      starts_at: reg.event.starts_at,
+      ends_at: reg.event.ends_at,
+      venue: reg.event.venue
     }
   }
 }
