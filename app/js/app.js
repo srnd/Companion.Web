@@ -55,6 +55,10 @@ companionApp.config(function($routeProvider, $locationProvider){
       templateUrl: "/views/template.html",
       controller: "templateController"
     })
+    .when('/settings', {
+      templateUrl: "/views/settings.html",
+      controller: "settingsController"
+    })
     .otherwise({
       redirectTo: '/'
     });
@@ -181,6 +185,17 @@ companionApp.controller('infoController', function($scope){
 companionApp.controller('slackController', function($scope){
   // nope
 });
+
+companionApp.controller('settingsController', function($scope, $location){
+  // You can redirect to a different path with $location.path("/path")
+  // For example: `$location.path("/event")` would redirect to the event page...
+  if(cache.loggedIn){
+    // Check if the user is logged in with <el ng-if="loggedIn">...</el>
+    $scope.loggedIn = true;
+    // Access the registration object in the view with {{ registration }}
+    $scope.registration = cache.registration;
+  }
+})
 
 companionApp.controller('templateController', function($scope, $location){
   // You can redirect to a different path with $location.path("/path")
