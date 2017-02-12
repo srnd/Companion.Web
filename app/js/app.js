@@ -78,7 +78,6 @@ companionApp.controller('loginController', function($scope, $http, $location){
       }else{
         alert(response.data.message)
       }
-      // $scope.$apply()
     });
   }
 
@@ -96,20 +95,6 @@ companionApp.controller('loginController', function($scope, $http, $location){
       localStorage.codedayCompanion = JSON.stringify(cache);
 
       $location.path("/event");
-      // $scope.requestingNotifications = true
-    
-      // Notification.requestPermission().then(function(result) {
-      //   cache = {
-      //     loggedIn: true,
-      //     registration: $scope.registration,
-      //     eventStaff: response.data.staff,
-      //     notifications: result
-      //   };
-
-      //   localStorage.codedayCompanion = JSON.stringify(cache);
-
-      //   $location.path("/event");
-      // });
     });
   }
 });
@@ -172,17 +157,10 @@ companionApp.controller('helpController', function($scope){
 
 companionApp.controller('scheduleController', function($scope){
   $scope.eventSchedule = cache.registration.event.schedule;
-  // $scope.days = [ ]
-  // for(var dayName in cache.registration.event.schedule){
-  //   $scope.days.push({
-  //     day: dayName,
-  //     schedule: cache.registration.event.schedule[dayName]
-  //   })
-  // }
 });
 
 companionApp.controller('infoController', function($scope){
-
+  // nope
 });
 
 companionApp.controller('slackController', function($scope){

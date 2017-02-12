@@ -11,30 +11,30 @@
 }
 
 @keyframes slideOutLeft {
-    to { transform: translateX(-100%); }
+  to { transform: translateX(-100%); }
 }
 
 @-webkit-keyframes slideOutLeft {
-    to { transform: translateX(-100%); }
+  to { transform: translateX(-100%); }
 }
 
 @-moz-keyframes slideOutLeft {
-    to { transform: translateX(-100%); }
+  to { transform: translateX(-100%); }
 }
 
 @keyframes slideInRight {
-    from { transform:translateX(100%); }
-    to { transform: translateX(0); }
+  from { transform:translateX(100%); }
+  to { transform: translateX(0); }
 }
 
 @-webkit-keyframes slideInRight {
-    from { transform:translateX(100%); }
-    to { transform: translateX(0); }
+  from { transform:translateX(100%); }
+  to { transform: translateX(0); }
 }
 
 @-moz-keyframes slideInRight {
-    from { transform:translateX(100%); }
-    to { transform: translateX(0); }
+  from { transform:translateX(100%); }
+  to { transform: translateX(0); }
 }
 
 .ng-enter:not(.noanimate){
