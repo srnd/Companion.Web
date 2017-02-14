@@ -1,7 +1,11 @@
 var express = require('express'),
     app = express()
 
-var config = require('./config.json')
+try{
+  var config = require('./config.json')
+}catch(e){
+  var config = process.env // lul
+}
 
 var Clear = require('codeday-clear'),
     clear = new Clear(config.CLEAR_TOKEN, config.CLEAR_SECRET)
@@ -100,4 +104,4 @@ app.get('*', (req, res) => {
   res.sendFile(__dirname + "/app/index.html")
 })
 
-app.listen(process.env.PORT || 1337)
+app.listen(process.env.PORT || 3030)

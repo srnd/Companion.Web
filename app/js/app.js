@@ -59,11 +59,22 @@ companionApp.config(function($routeProvider, $locationProvider){
       templateUrl: "/views/settings.html",
       controller: "settingsController"
     })
+    .when('/debug', {
+      templateUrl: "/views/debug.html",
+      controller: "debugController"
+    })
     .otherwise({
       redirectTo: '/'
     });
   
   $locationProvider.html5Mode(true);
+});
+
+companionApp.controller('debugController', function($scope){
+  $scope.standalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+  $scope.registration = cache.registration;
+  $scope.loggedIn = cache.loggedIn;
+  $scope.standalonePlatform = (window.navigator.standalone ? "ios" : (window.matchMedia('(display-mode: standalone)').matches ? "android" : "none"));
 });
 
 companionApp.controller('resetController', function($scope, $location){
@@ -146,9 +157,16 @@ companionApp.controller('loginDeeplinkController', function($scope, $routeParams
 });
 
 companionApp.controller('eventController', function($scope, $location){
+  var logoTaps = 0;
+
   if(cache.loggedIn){
     $scope.loggedIn = true;
     $scope.registration = cache.registration;
+  }
+
+  $scope.tapLogo = function(){
+    logoTaps++;
+    if(logoTaps === 10) $location.path("/debug");
   }
 });
 
