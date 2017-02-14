@@ -162,6 +162,8 @@ companionApp.controller('eventController', function($scope, $location){
   if(cache.loggedIn){
     $scope.loggedIn = true;
     $scope.registration = cache.registration;
+  }else{
+    $location.path("/");
   }
 
   $scope.tapLogo = function(){
