@@ -91,7 +91,7 @@ app.get('/api/staff', (req, res) => {
           first_name: event.manager.first_name
         },
         evangelist: {
-          phone: event.evangelist.phone,
+          // phone: event.evangelist.phone,
           first_name: event.evangelist.first_name
         }
       }
