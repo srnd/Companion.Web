@@ -1,7 +1,11 @@
 var express = require('express'),
     app = express()
 
-var config = require('./config.json')
+try{
+  var config = require('./config.json')
+}catch(e){
+  var config = process.env // lul
+}
 
 var Clear = require('codeday-clear'),
     clear = new Clear(config.CLEAR_TOKEN, config.CLEAR_SECRET)
@@ -99,7 +103,7 @@ app.get('/api/staff', (req, res) => {
           first_name: event.manager.first_name
         },
         evangelist: {
-          phone: event.evangelist.phone,
+          // phone: event.evangelist.phone,
           first_name: event.evangelist.first_name
         }
       }
@@ -107,9 +111,9 @@ app.get('/api/staff', (req, res) => {
   })
 })
 
-// let angular handle all the other views
+// let angular handle all the other routes
 app.get('*', (req, res) => {
   res.sendFile(__dirname + "/app/index.html")
 })
 
-app.listen(process.env.PORT || 1337)
+app.listen(process.env.PORT || 3030)
