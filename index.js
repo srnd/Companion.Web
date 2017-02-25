@@ -37,9 +37,15 @@ var filterRegistration = reg => {
 
 app.get('/api/associate', (req, res) => {
   console.log(req.query)
-
-  // TODO implement!
+  // TODO: implement!
   res.send({ ok: true })
+})
+
+app.get('/api/ticket/:ticketId', (req, res) => {
+  clear._get("registration/" + encodeURIComponent(req.params.ticketId), { }, reg => {
+    console.log(reg)
+    res.send(filterRegistration(reg))
+  })
 })
 
 // this server only handles the login API
