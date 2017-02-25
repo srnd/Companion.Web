@@ -1,12 +1,17 @@
 var companionApp = angular.module('companionApp', ['ngRoute', 'ngAnimate']);
 
 var cache = (localStorage.codedayCompanion ? JSON.parse(localStorage.codedayCompanion) : { });
-var firstOpen = true
 
 companionApp.filter('mapsUrl', function($sce) {
   return function(place){
     return $sce.trustAsResourceUrl("https://www.google.com/maps/embed/v1/place?key=AIzaSyATJIcKruTQnapxp7lxTmnpy-yoMDJEwy0&q=" + encodeURIComponent(place));
   };
+});
+
+var messaging;
+
+angular.element(document).ready(function(){
+  messaging = firebase.messaging();
 });
 
 companionApp.config(function($routeProvider, $locationProvider){
@@ -116,6 +121,27 @@ companionApp.controller('loginController', function($scope, $http, $location){
         registration: $scope.registration,
         eventStaff: response.data.staff
       };
+
+      messaging.requestPermission()
+        .then(function() {
+          // success! we have notification permissions
+          messaging.getToken()
+            .then(function(currentToken) {
+              if(currentToken){
+                $http({
+                  method: "GET",
+                  url: "/api/associate?id=" + $scope.registration.id + "&token=" + currentToken
+                })
+              }
+            })
+            .catch(function(err) {
+              console.error(err);
+              alert("We couldn't register you for push notifications :(\nWe'll try again later.");
+            });
+        })
+        .catch(function(err) {
+          // oh well, we can prompt the user later...
+        });
 
       localStorage.codedayCompanion = JSON.stringify(cache);
 
@@ -227,13 +253,3 @@ companionApp.controller('templateController', function($scope, $location){
     $scope.registration = cache.registration;
   }
 })
-
-// if('serviceWorker' in navigator){
-//   window.addEventListener('load', function() {
-//     navigator.serviceWorker.register('/sw.js').then(function(registration) {
-//       console.log('SW registered', registration.scope);
-//     }).catch(function(err) {
-//       console.log('Couldn\'t register SW', err);
-//     });
-//   });
-// }

@@ -30,9 +30,22 @@
       <div ng-view></div>
     </div>
 
-    <script>
+    <!--<script>
       (function(t,a,l,k,u,s,e){if(!t[u]){t[u]=function(){(t[u].q=t[u].q||[]).push(arguments)},t[u].l=1*new Date();s=a.createElement(l),e=a.getElementsByTagName(l)[0];s.async=1;s.src=k;e.parentNode.insertBefore(s,e)}})(window,document,'script','//www.talkus.io/plugin.beta.js','talkus');
       talkus('init', 'DptgxkJDNvbkLB2mX');
+    </script>-->
+    
+    <script src="https://www.gstatic.com/firebasejs/3.6.10/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyB6QOdhKIrF7t1UiEX87ylLo7a871mFXg8",
+        authDomain: "codeday-companion.firebaseapp.com",
+        databaseURL: "https://codeday-companion.firebaseio.com",
+        storageBucket: "codeday-companion.appspot.com",
+        messagingSenderId: "687237881018"
+      };
+      firebase.initializeApp(config);
     </script>
   </body>
 </html>

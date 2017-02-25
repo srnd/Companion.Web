@@ -36,6 +36,8 @@ var filterRegistration = reg => {
 }
 
 app.get('/api/associate', (req, res) => {
+  console.log(req.query)
+
   // TODO implement!
   res.send({ ok: true })
 })

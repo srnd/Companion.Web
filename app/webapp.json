@@ -7,6 +7,7 @@
   "start_url": "/",
   "scope": "/",
   "background_color": "#fff",
+  "gcm_sender_id": "103953800507",
   "icons": [
     {
       "src": "/img/appicon.png",
