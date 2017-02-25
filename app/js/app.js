@@ -76,10 +76,23 @@ companionApp.config(function($routeProvider, $locationProvider){
 });
 
 companionApp.controller('debugController', function($scope){
+  $scope.iid = "";
   $scope.standalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
   $scope.registration = cache.registration;
   $scope.loggedIn = cache.loggedIn;
   $scope.standalonePlatform = (window.navigator.standalone ? "ios" : (window.matchMedia('(display-mode: standalone)').matches ? "android" : "none"));
+
+  messaging.getToken()
+    .then(function(currentToken) {
+      if(currentToken){
+        $scope.iid = currentToken;
+      }else{
+        $scope.iid = "(none)";
+      }
+    })
+    .catch(function(err) {
+      $scope.iid = "(error getting iid)";
+    });
 });
 
 companionApp.controller('resetController', function($scope, $location){
