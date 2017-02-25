@@ -35,6 +35,11 @@ var filterRegistration = reg => {
   }
 }
 
+app.get('/api/associate', (req, res) => {
+  // TODO implement!
+  res.send({ ok: true })
+})
+
 // this server only handles the login API
 app.get('/api/login', (req, res) => {
   if(req.query.email){
