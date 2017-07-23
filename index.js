@@ -1,5 +1,11 @@
+const session = require('express-session')
+
 var express = require('express'),
     app = express()
+
+var bodyParser = require('body-parser')
+
+const request = require('request')
 
 try{
   var config = require('./config.json')
@@ -10,8 +16,13 @@ try{
 var Clear = require('codeday-clear'),
     clear = new Clear(config.CLEAR_TOKEN, config.CLEAR_SECRET)
 
+var Messenger = require('./lib/messenger.js'),
+    messenger = new Messenger(config.MESSENGER_TOKEN)
+
 // process.on('uncaughtException', () => {})
 
+app.use(session({ secret: config.COOKIE_SECRET, cookie: { maxAge: 60000 }}))
+app.use(bodyParser.json({ extended: true }))
 app.use(express.static("app"))
 
 var filterRegistration = reg => {
@@ -36,9 +47,25 @@ var filterRegistration = reg => {
 }
 
 app.get('/api/associate', (req, res) => {
-  console.log(req.query)
-  // TODO: implement!
-  res.send({ ok: true })
+  // console.log(req.query)
+  if(req.query.id && req.query.token) {
+    console.log(req.query)
+    request.post(`https://clear.codeday.org/api/registration/${req.query.id.trim()}/devices`, {
+      qs: {
+        token: config.CLEAR_TOKEN,
+        secret: config.CLEAR_SECRET
+      },
+      form: {
+        service: "app",
+        device_token: req.query.token.trim()
+      },
+      json: true
+    }, (err, apiRes, body) => {
+      res.send(body)
+    })
+  } else {
+    res.send({ ok: false })
+  }
 })
 
 app.get('/api/ticket/:ticketId', (req, res) => {
@@ -48,7 +75,6 @@ app.get('/api/ticket/:ticketId', (req, res) => {
   })
 })
 
-// this server only handles the login API
 app.get('/api/login', (req, res) => {
   if(req.query.email){
     clear._get("registration/by-email/" + encodeURIComponent(req.query.email), { }, (registrations) => {
@@ -111,6 +137,9 @@ app.get('/api/staff', (req, res) => {
     })
   })
 })
+
+require('./routes/s5')(app, config)
+require('./routes/spotify')(app, config)
 
 // let angular handle all the other routes
 app.get('*', (req, res) => {

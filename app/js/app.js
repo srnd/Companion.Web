@@ -8,7 +8,7 @@ companionApp.filter('mapsUrl', function($sce) {
   };
 });
 
-var messaging;
+var messaging, nowPlaying;
 
 angular.element(document).ready(function(){
   messaging = firebase.messaging();
@@ -68,6 +68,10 @@ companionApp.config(function($routeProvider, $locationProvider){
       templateUrl: "/views/debug.html",
       controller: "debugController"
     })
+    .when('/nowplaying', {
+      templateUrl: "views/nowplaying.html",
+      controller: "nowPlayingController"
+    })
     .otherwise({
       redirectTo: '/'
     });
@@ -93,6 +97,10 @@ companionApp.controller('debugController', function($scope){
     .catch(function(err) {
       $scope.iid = "(error getting iid)";
     });
+});
+
+companionApp.controller('nowPlayingController', function($scope, $location){
+  // ???
 });
 
 companionApp.controller('resetController', function($scope, $location){
@@ -195,8 +203,9 @@ companionApp.controller('loginDeeplinkController', function($scope, $routeParams
   });
 });
 
-companionApp.controller('eventController', function($scope, $location){
+companionApp.controller('eventController', function($scope, $location, $http){
   var logoTaps = 0;
+  $scope.nowPlaying = null;
 
   if(cache.loggedIn){
     $scope.loggedIn = true;
@@ -204,6 +213,15 @@ companionApp.controller('eventController', function($scope, $location){
   }else{
     $location.path("/");
   }
+
+  $http({
+    method: "GET",
+    url: "/spotify/nowplaying?event=" + encodeURIComponent($scope.registration.event.id)
+  }).then(function(response){
+    if(response.data.isPlaying){
+      $scope.nowPlaying = response.data.artist + " — " + response.data.title;
+    }
+  })
 
   $scope.tapLogo = function(){
     logoTaps++;
