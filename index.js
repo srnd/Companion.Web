@@ -75,6 +75,13 @@ app.get('/api/ticket/:ticketId', (req, res) => {
   })
 })
 
+app.get('/api/announcements/:eventId', (req, res) => {
+  clear._get(`event/${req.params.eventId}/announcements`, { }, announcements => {
+    console.log(announcements)
+    res.send(announcements)
+  })
+})
+
 app.get('/api/login', (req, res) => {
   if(req.query.email){
     clear._get("registration/by-email/" + encodeURIComponent(req.query.email), { }, (registrations) => {
