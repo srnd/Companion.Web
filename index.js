@@ -6,6 +6,7 @@ var express = require('express'),
 var bodyParser = require('body-parser')
 
 const request = require('request')
+const moment = require('moment')
 
 try{
   var config = require('./config.json')
@@ -27,6 +28,7 @@ app.use(express.static("app"))
 
 var filterRegistration = reg => {
   return {
+    ok: true,
     id: reg.id,
     name: reg.name,
     first_name: reg.first_name,
@@ -69,9 +71,18 @@ app.get('/api/associate', (req, res) => {
 })
 
 app.get('/api/ticket/:ticketId', (req, res) => {
-  clear._get("registration/" + encodeURIComponent(req.params.ticketId), { }, reg => {
-    console.log(reg)
-    res.send(filterRegistration(reg))
+  request(`https://clear.codeday.org/api/registration/${encodeURIComponent(req.params.ticketId)}`, {
+    qs: {
+      token: config.CLEAR_TOKEN,
+      secret: config.CLEAR_SECRET
+    },
+    json: true
+  }, (err, apiRes, body) => {
+    if(typeof(body) === "object") {
+      res.send(filterRegistration(body))
+    } else {
+      res.send({ ok: false })
+    }
   })
 })
 
@@ -79,6 +90,38 @@ app.get('/api/announcements/:eventId', (req, res) => {
   clear._get(`event/${req.params.eventId}/announcements`, { }, announcements => {
     console.log(announcements)
     res.send(announcements)
+  })
+})
+
+app.get('/api/checkin/:ticketId', (req, res) => {
+  clear._get("registration/" + encodeURIComponent(req.params.ticketId), { }, reg => {
+    var event = reg.event
+    var isToday = moment(event.starts_at * 1000).isSame(moment(), "day")
+    
+    if(!isToday) {
+      request.post("https://clear.codeday.org/api/checkin", {
+        body: {
+          r: req.params.ticketId,
+          check: "in",
+          event: event.id,
+          public: config.CLEAR_TOKEN,
+          private: config.CLEAR_SECRET
+        },
+        json: true
+      }, (err, apiRes, data) => {
+        if(data.success) {
+          res.send({ ok: true })
+        } else {
+          console.log(data)
+          res.send({ ok: false, error: data.error })
+        }
+      })
+    } else {
+      res.send({
+        ok: false,
+        error: "CodeDay isn't today"
+      })
+    }
   })
 })
 
