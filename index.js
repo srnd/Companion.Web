@@ -38,6 +38,7 @@ var filterRegistration = reg => {
     checked_in_at: reg.checked_in_at,
     has_age: reg.age > 0,
     has_parent: (reg.parent_information_exempt ? true : (reg.parent_name !== null && reg.parent_email !== null && reg.parent_phone !== null && reg.parent_secondary_phone !== null)),
+    has_waiver: reg.waiver_pdf !== null,
     event: {
       id: reg.event.id,
       region: reg.event.region_name,
