@@ -101,7 +101,7 @@ app.get('/api/checkin/:ticketId', (req, res) => {
     var event = reg.event
     var isToday = moment(event.starts_at * 1000).isSame(moment(), "day")
     
-    if(!isToday) {
+    if(isToday && reg.type === "student") {
       request.post("https://clear.codeday.org/api/checkin", {
         body: {
           r: req.params.ticketId,
@@ -112,8 +112,8 @@ app.get('/api/checkin/:ticketId', (req, res) => {
         },
         json: true
       }, (err, apiRes, data) => {
-        if(data.success) {
-          res.send({ ok: true })
+        if(!data.error) {
+          res.send({ ok: true, code: "ABCD" })
         } else {
           console.log(data)
           res.send({ ok: false, error: data.error })
