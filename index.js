@@ -108,6 +108,7 @@ app.get('/api/checkin/:ticketId', (req, res) => {
         body: {
           r: req.params.ticketId,
           check: "in",
+          disallow_missing_info: "true",
           event: event.id,
           public: config.CLEAR_TOKEN,
           private: config.CLEAR_SECRET
