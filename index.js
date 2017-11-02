@@ -119,7 +119,7 @@ app.get('/api/checkin/:ticketId', (req, res) => {
           res.send({ ok: true, code: "C822" })
         } else {
           console.log(data)
-          res.send({ ok: false, error: data.error })
+          res.send({ ok: false, error: data.error, error_code: data.error_code })
         }
       })
     } else {
