@@ -89,6 +89,12 @@ app.get('/api/ticket/:ticketId', (req, res) => {
   })
 })
 
+app.get('/api/nowplaying/:eventId', (req, res) => {
+  clear._get(`event/${req.params.eventId}/now-playing`, { }, nowPlaying => {
+    res.send(nowPlaying)
+  })
+})
+
 app.get('/api/announcements/:eventId', (req, res) => {
   clear._get(`event/${req.params.eventId}/announcements`, { }, announcements => {
     console.log(announcements)
