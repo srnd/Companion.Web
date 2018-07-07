@@ -11,7 +11,7 @@ js/app.js
 
 views/event.html
 views/login.html
-views/slack.html
+views/chat.html
 views/ticket.html
 views/welcome.html
 
