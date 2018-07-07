@@ -36,8 +36,8 @@ companionApp.config(function($routeProvider, $locationProvider){
       templateUrl: "/views/ticket.html",
       controller: "ticketController"
     })
-    .when('/slack', {
-      templateUrl: "/views/slack.html",
+    .when('/chat', {
+      templateUrl: "/views/chat.html",
       controller: "slackController"
     })
     .when('/help', {
