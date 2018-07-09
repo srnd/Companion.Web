@@ -52,16 +52,20 @@ var filterRegistration = reg => {
 }
 
 app.get('/api/associate', (req, res) => {
-  // console.log(req.query)
   if(req.query.id && req.query.token) {
-    console.log(req.query)
+    if(req.query.ios === "true") {
+      var service = `app_ios_${req.query.dev === "true" ? "dev" : "prod"}`
+    } else {
+      var service = "app"
+    }
+
     request.post(`https://clear.codeday.org/api/registration/${req.query.id.trim()}/devices`, {
       qs: {
         token: config.CLEAR_TOKEN,
         secret: config.CLEAR_SECRET
       },
       form: {
-        service: "app",
+        service: service,
         device_token: req.query.token.trim()
       },
       json: true
