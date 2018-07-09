@@ -107,8 +107,8 @@ app.get('/api/checkin/:ticketId', (req, res) => {
     var event = reg.event
     var isToday = moment(event.starts_at * 1000).isSame(moment(), "day")
     
-    if(reg.id === "qvmdewx7wyrf6xx" || reg.id === "wccechnqmeghnwg") {
-      res.send({ ok: true, code: "GOOD" })
+    if(reg.id === "qvmdewx7wyrf6xx" || reg.id === "wccechnqmeghnwg" || reg.id === "abxw9dx6ae3k63n") {
+      res.send({ ok: true, code: "TEST" })
     } else if(isToday || reg.type !== "student") {
       request.post("https://clear.codeday.org/api/checkin", {
         body: {
