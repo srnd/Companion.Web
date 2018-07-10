@@ -54,7 +54,7 @@ var filterRegistration = reg => {
 app.get('/api/associate', (req, res) => {
   if(req.query.id && req.query.token) {
     if(req.query.ios === "true") {
-      var service = `app_ios_${req.query.dev === "true" ? "dev" : "prod"}`
+      var service = `app_ios_${req.query.dev === "1" ? "dev" : "prod"}`
     } else {
       var service = "app"
     }
