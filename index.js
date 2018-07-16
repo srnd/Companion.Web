@@ -33,6 +33,7 @@ var filterRegistration = reg => {
     name: reg.name,
     first_name: reg.first_name,
     last_name: reg.last_name,
+    email: reg.email,
     profile_image: reg.profile_image,
     type: reg.type,
     checked_in_at: reg.checked_in_at,
