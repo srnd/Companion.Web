@@ -42,6 +42,7 @@ var filterRegistration = reg => {
     event: {
       id: reg.event.id,
       region: reg.event.region_name,
+      region_id: reg.event.region_id,
       name: reg.event.name,
       schedule: reg.event.schedule,
       starts_at: reg.event.starts_at,
