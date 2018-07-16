@@ -93,6 +93,12 @@ app.get('/api/ticket/:ticketId', (req, res) => {
   })
 })
 
+app.get('/api/event/:region', (req, res) => {
+  clear._get(`region/${req.params.region}`, { }, region => {
+    res.send(region.current_event)
+  })
+})
+
 app.get('/api/nowplaying/:eventId', (req, res) => {
   clear._get(`event/${req.params.eventId}/now-playing`, { }, nowPlaying => {
     res.send(nowPlaying)
