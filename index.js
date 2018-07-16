@@ -26,6 +26,23 @@ app.use(session({ secret: config.COOKIE_SECRET, cookie: { maxAge: 60000 }}))
 app.use(bodyParser.json({ extended: true }))
 app.use(express.static("app"))
 
+var filterEvent = event => {
+  return {
+    id: event.id,
+    name: event.name,
+    starts_at: event.starts_at,
+    ends_at: event.ends_at,
+    venue: {
+      name: event.venue.name,
+      full_address: event.venue.full_address
+    },
+    stripe_public_key: event.stripe_public_key,
+    is_early_bird_pricing: event.is_early_bird_pricing,
+    cost: event.cost,
+    currency: event.currency
+  }
+}
+
 var filterRegistration = reg => {
   return {
     ok: true,
@@ -97,7 +114,9 @@ app.get('/api/ticket/:ticketId', (req, res) => {
 
 app.get('/api/event/:region', (req, res) => {
   clear._get(`region/${req.params.region}`, { }, region => {
-    res.send(region.current_event)
+    clear.getEventById(region.current_event.id, event => {
+      res.send(filterEvent(event))
+    })
   })
 })
 
