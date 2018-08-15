@@ -7,6 +7,9 @@ var bodyParser = require('body-parser')
 
 const request = require('request')
 const moment = require('moment')
+// TODO: make this more dynamic (e.g. put the keys in Clear)
+const keys = require('./keys.json')
+const Paseto = require('paseto.js')
 
 try{
   var config = require('./config.json')
@@ -133,6 +136,27 @@ app.get('/api/announcements/:eventId', (req, res) => {
   })
 })
 
+const finalizeCheckIn = (event, req, res) => {
+  request.post("https://clear.codeday.org/api/checkin", {
+    body: {
+      r: req.params.ticketId,
+      check: "in",
+      disallow_missing_info: "true",
+      event: event.id,
+      public: config.CLEAR_TOKEN,
+      private: config.CLEAR_SECRET
+    },
+    json: true
+  }, (err, apiRes, data) => {
+    if(!data.error) {
+      res.send({ ok: true, code: "C822" })
+    } else {
+      console.log(data)
+      res.send({ ok: false, error: data.error, error_code: data.error_code })
+    }
+  })
+}
+
 app.get('/api/checkin/:ticketId', (req, res) => {
   clear._get("registration/" + encodeURIComponent(req.params.ticketId), { }, reg => {
     var event = reg.event
@@ -140,25 +164,46 @@ app.get('/api/checkin/:ticketId', (req, res) => {
     
     if(reg.id === "qvmdewx7wyrf6xx" || reg.id === "wccechnqmeghnwg" || reg.id === "abxw9dx6ae3k63n") {
       res.send({ ok: true, code: "TEST" })
+    } else if(isToday || reg.type !== "student" && keys[event.id]) {
+      if(req.query.token) {
+        // Handle BLE check-in signature
+        const pk = new Paseto.PublicKey(new Paseto.V2())
+        let verifier
+
+        pk.hex(keys[event.id])
+          .then(() => {
+            verifier = pk.protocol()
+            return verifier.verify(req.query.token, pk)
+          })
+          .catch(err => {
+            res.send({
+              ok: false,
+              error: "The beacon signature was invalid."
+            })
+          })
+          .then(msg => {
+            if(msg) {
+              console.log("Decoded paseto", msg)
+              var json = JSON.parse(msg)
+              if(json.event === event.id && json.attendee === req.params.ticketId) {
+                // TODO: Timestamp verification
+                finalizeCheckIn(event, req, res)
+              } else {
+                res.send({
+                  ok: false,
+                  error: "The beacon signature was for the wrong event or registration."
+                })
+              }
+            }
+          })
+      } else {
+        res.send({
+          ok: false,
+          error: "This event requires a beacon signature"
+        })
+      }
     } else if(isToday || reg.type !== "student") {
-      request.post("https://clear.codeday.org/api/checkin", {
-        body: {
-          r: req.params.ticketId,
-          check: "in",
-          disallow_missing_info: "true",
-          event: event.id,
-          public: config.CLEAR_TOKEN,
-          private: config.CLEAR_SECRET
-        },
-        json: true
-      }, (err, apiRes, data) => {
-        if(!data.error) {
-          res.send({ ok: true, code: "C822" })
-        } else {
-          console.log(data)
-          res.send({ ok: false, error: data.error, error_code: data.error_code })
-        }
-      })
+      finalizeCheckIn(event, req, res)
     } else {
       res.send({
         ok: false,
