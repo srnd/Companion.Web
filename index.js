@@ -186,12 +186,20 @@ app.get('/api/checkin/:ticketId', (req, res) => {
               console.log("Decoded paseto", msg)
               var json = JSON.parse(msg)
               if(json.event === event.id && json.attendee === req.params.ticketId) {
-                // TODO: Timestamp verification
-                finalizeCheckIn(event, req, res)
+                let duration = moment.duration(moment.unix(json.date).diff(moment())).as("seconds")
+
+                if(duration <= 10) {
+                  finalizeCheckIn(event, req, res)
+                } else {
+                  res.send({
+                    ok: false,
+                    error: "The beacon token is too old. Please try checking in again."
+                  })
+                }
               } else {
                 res.send({
                   ok: false,
-                  error: "The beacon signature was for the wrong event or registration."
+                  error: "The beacon token was for the wrong event or registration."
                 })
               }
             }
@@ -199,7 +207,8 @@ app.get('/api/checkin/:ticketId', (req, res) => {
       } else {
         res.send({
           ok: false,
-          error: "This event requires a beacon signature"
+          error: "This event requires a beacon verification. Please make sure your CodeDay Companion app is updated.",
+          error_code: "BEACON_REQUIRED"
         })
       }
     } else if(isToday || reg.type !== "student") {
