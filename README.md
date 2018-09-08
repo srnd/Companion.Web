@@ -4,6 +4,8 @@ CodeDay Companion is a web app that will assist you during the event, giving you
 
 You can "install" this on your phone as well, by pressing the "Add to Home Screen" button in whatever browser you're using. It works best on Chrome Android, though, since it has themes and stuff.
 
+If you're looking for a native app, check out the [Android](https://github.com/srnd/Companion.Android) and [iOS](https://github.com/srnd/Companion.iOS) repos.
+
 ## Running
 
 ```shell
