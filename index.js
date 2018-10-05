@@ -115,6 +115,29 @@ app.get('/api/ticket/:ticketId', (req, res) => {
   })
 })
 
+app.get('/api/regions_attended/:ticketId', (req, res) => {
+  request(`https://clear.codeday.org/api/registration/${encodeURIComponent(req.params.ticketId)}`, {
+    qs: {
+      token: config.CLEAR_TOKEN,
+      secret: config.CLEAR_SECRET
+    },
+    json: true
+  }, (err, apiRes, body) => {
+    if(typeof(body) === "object") {
+      clear._get("registration/by-email/" + encodeURIComponent(body.email), { }, registrations => {
+        var regions = [ ]
+        registrations.all_registrations.forEach(reg => {
+          regions.push(reg.event.region.id)
+        })
+        res.send(regions.filter((value, index, self) => self.indexOf(value) === index))
+      })
+      // res.send(filterRegistration(body))
+    } else {
+      res.send({ ok: false })
+    }
+  })
+})
+
 app.get('/api/event/:region', (req, res) => {
   clear._get(`region/${req.params.region}`, { }, region => {
     clear.getEventById(region.current_event.id, event => {
